@@ -10,7 +10,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-
 @Controller
 @RequiredArgsConstructor
 public class TaskController {
@@ -19,18 +18,26 @@ public class TaskController {
     @GetMapping("/allTask")
     public String showTasks(Model model) {
         model.addAttribute("tasks", taskService.getAllTasks());
-        model.addAttribute("task", new Task());
         return "all-task";
     }
+
+    @GetMapping("/task/create")
+    public String showNewTaskForm(Model model) {
+        model.addAttribute("task", new Task());
+        return "task-create";
+    }
+
     @PostMapping("/task/create")
     public String createTask(@ModelAttribute Task task) {
         taskService.createTasks(task);
-        return "redirect:/task-create";
-        }
+        return "redirect:/allTask";
+    }
+
     @GetMapping("/task/delete/{id}")
     public String deleteTask(@PathVariable Long id) {
         taskService.deleteTask(id);
         return "redirect:/allTask";
     }
 }
+
 

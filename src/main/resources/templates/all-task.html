@@ -1,0 +1,38 @@
+<!doctype html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Список задач</title>
+</head>
+<body>
+<h1>Список задач</h1>
+<a href="/task/create">Добавить новую задачу</a>
+<table border="1">
+    <tr>
+        <th>ID</th>
+        <th>Название</th>
+        <th>Дата добавления</th>
+        <th>Описание</th>
+        <th>Срок задачи</th>
+        <th>Статус задачи</th>
+    </tr>
+
+    <tr th:each="task : ${tasks}">
+
+        <td th:text="${task.id}"></td>
+        <td th:text="${task.title}"></td>
+        <td th:text="${task.createdAt}"></td>
+        <td th:text="${task.description}"></td>
+        <td th:text="${task.dueDate}"></td>
+        <td th:text="${task.status}"></td>
+        <td>
+            <a th:href="@{'/task/edit/' + ${task.id}}">Редактировать</a>
+            <a th:href="@{'/task/delete/' + ${task.id}}">Удалить</a>
+        </td>
+    </tr>
+</table>
+</body>
+</html>

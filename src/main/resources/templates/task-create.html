@@ -1,1 +1,26 @@
+<!doctype html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Создание задачи</title>
+</head>
+<body>
+<h1 th:text="${task.id == null ? 'Добавить задачу' : 'Редактировать задачу'}"></h1>
+<form th:action="@{/task/create}" th:object="${task}" method="post">
+    <input type="hidden" th:field="*{id}">
 
+    <label for="title">Название:</label>
+    <input type="text" id="title" th:field="*{title}" required>
+
+    <label for="description">Описание:</label>
+    <input type="text" id="description" th:field="*{description}" required>
+
+
+
+    <button type="submit">Сохранить</button>
+</form>
+</body>
+</html>

@@ -29,10 +29,24 @@
         <td th:text="${task.dueDate}"></td>
         <td th:text="${task.status}"></td>
         <td>
+            <form th:action="@{'/task/status/' + ${task.id}}" method="post">
+                <button type="submit" th:text="'В прогрессе'"
+                        th:disabled="${task.status == 'В прогрессе'}">
+                    Изменить статус
+                </button>
+            </form>
+            <form th:action="@{/task/status/completed/{id}(id=${task.id})}" method="post">
+                <button type="submit" th:text="'Завершен'"
+                        th:disabled="${task.status == 'Завершен'}">
+                    Изменить статус
+                </button>
+            </form>
             <a th:href="@{'/task/edit/' + ${task.id}}">Редактировать</a>
             <a th:href="@{'/task/delete/' + ${task.id}}">Удалить</a>
         </td>
     </tr>
+
+
 </table>
 </body>
 </html>

@@ -2,6 +2,7 @@ package com.todo.todolist.controller;
 
 
 import com.todo.todolist.model.Task;
+import com.todo.todolist.model.TaskStatus;
 import com.todo.todolist.service.TaskService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
@@ -32,6 +33,21 @@ public class TaskController {
         taskService.createTasks(task);
         return "redirect:/allTask";
     }
+
+    @PostMapping("/task/status/{id}")
+    public String updateTaskStatus(@PathVariable Long id) {
+        Task task = taskService.getTaskById(id);
+        taskService.taskStatus(task);
+        return "redirect:/allTask";
+    }
+    @PostMapping("/task/status/completed/{id}")
+    public String updateTaskStatusCompleted(@PathVariable Long id) {
+        Task task = taskService.getTaskById(id);
+        taskService.isInProgress(task);
+        return "redirect:/allTask";
+    }
+
+
 
     @GetMapping("/task/delete/{id}")
     public String deleteTask(@PathVariable Long id) {

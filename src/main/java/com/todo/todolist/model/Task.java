@@ -21,10 +21,10 @@ public class Task {
     private String description;
 
     @Column(name = "created")
-    private LocalDateTime createdAt;//дата создания
+    private LocalDate createdAt;//дата создания
 
     @Column(name = "due_date")
-    private LocalDateTime dueDate;//срок выполнения
+    private LocalDate dueDate;//срок выполнения
 
     @Enumerated(EnumType.STRING)
     private TaskStatus status = TaskStatus.NEW;

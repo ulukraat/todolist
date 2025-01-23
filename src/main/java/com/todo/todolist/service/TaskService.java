@@ -9,7 +9,7 @@ import lombok.Data;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 import java.util.List;
 
 @Service
@@ -20,12 +20,17 @@ public class TaskService {
     public List<Task> getAllTasks(){
         return taskRepository.findAll();
     }
+    public Task getTaskById(Long id) {
+        return taskRepository.findById(id).orElseThrow(() -> new RuntimeException("Задача не найдена"));
+    }
+
+
 
     public void createTasks(Task task){
-                task.setCreatedAt(LocalDateTime.now());
+                task.setCreatedAt(LocalDate.now());
 
-                if(task.getDueDate() == null){
-                    task.setDueDate(LocalDateTime.now().plusDays(7));//дефолт время 7 дней
+                if (task.getDueDate().isBefore(task.getCreatedAt())){
+                    throw new RuntimeException("Срок задачи не может быть позже настоящего");
                 }
                 task.setStatus(TaskStatus.NEW);
                 taskRepository.save(task);
@@ -35,13 +40,27 @@ public class TaskService {
             taskRepository.deleteById(id);
     }
 
-    public void taskStatus(Task task){
-        LocalDateTime dayCreated = task.getCreatedAt();
-        boolean isOverDue = task.getDueDate().isAfter(dayCreated);
-        if(isOverDue){
-            task.setStatus(TaskStatus.OVERDUE);
+    public void taskStatus(Task task) {
+        LocalDate dayCreated = task.getCreatedAt();
+        boolean isOverDue = task.getDueDate().isBefore(dayCreated);
+        if (isOverDue) {
+            task.setStatus(TaskStatus.OVERDUE);//проверка не просрочен ли таск
+            taskRepository.save(task);
+        } else if (task.getStatus() == TaskStatus.NEW) {
+            task.setStatus(TaskStatus.IN_PROGRESS);
+            taskRepository.save(task);
         }
-    }//проверка не просрочен ли таск
+    }
+
+    public void isInProgress(Task task) {
+        if (task.getStatus() == TaskStatus.IN_PROGRESS) {
+            task.setStatus(TaskStatus.COMPLETED);
+            taskRepository.save(task);
+        }else if (task.getStatus() == TaskStatus.NEW) {
+            return;
+        }
+    }
+
 
 
 

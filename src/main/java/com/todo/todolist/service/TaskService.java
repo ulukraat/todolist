@@ -61,6 +61,12 @@ public class TaskService {
         }
     }
 
+    public void redactTask(Task task) {
+        task.setCreatedAt(LocalDate.now());
+
+        taskRepository.save(task);
+    }
+
 
 
 

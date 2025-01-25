@@ -47,13 +47,25 @@ public class TaskController {
         return "redirect:/allTask";
     }
 
-
-
     @GetMapping("/task/delete/{id}")
     public String deleteTask(@PathVariable Long id) {
         taskService.deleteTask(id);
         return "redirect:/allTask";
     }
+    @GetMapping("/redactor/{id}")
+    public String redactor(@PathVariable Long id, Model model) {
+        Task task = taskService.getTaskById(id);
+        model.addAttribute("task", task);
+        return "task-redactor";
+    }
+
+    @PostMapping("/redactor/{id}")
+    public String redactor(@PathVariable Long id, @ModelAttribute Task task) {
+        taskService.redactTask(task);
+        return "redirect:/allTask";
+    }
+
+
 }
 
 

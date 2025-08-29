@@ -1,0 +1,67 @@
+package com.todo.todo.controller;
+
+import com.todo.todo.model.Task;
+import com.todo.todo.repository.TaskRepository;
+import com.todo.todo.service.TaskService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.*;
+
+import java.time.LocalDateTime;
+import java.util.List;
+
+@Controller
+@RequestMapping("/tasks")
+public class TaskController {
+    @Autowired
+    private TaskService taskService;
+    @Autowired
+    private TaskRepository taskRepository;
+
+    @GetMapping()
+    public String getTask(Model model) {
+        List<Task> tasks = taskService.getAllTasks();
+
+        for (Task task : tasks) {
+            System.out.println("Задача ID: " + task.getId());
+            System.out.println("Название: " + task.getTitle());
+            System.out.println("Начало задачи: " + task.getStartDate());
+            System.out.println("Конец задачи: " + task.getDueDate());
+        }
+        model.addAttribute("tasks", taskService.getAllTasks());
+        return "task-list";
+    }
+
+    @GetMapping("/new")
+    public String newTask(Model model) {
+        model.addAttribute("task", new Task());
+        return "task-form";
+    }
+
+    @PostMapping("/save")
+    public String saveTask(@ModelAttribute("task") Task task) {
+        if (task.getId() == null) {
+            task.setStartDate(LocalDateTime.now());
+        } else {
+            Task existing = taskService.getTaskById(task.getId());
+            task.setStartDate(existing.getStartDate());
+        }
+        taskService.saveTask(task);
+        return "redirect:/tasks";
+    }
+
+    @GetMapping("/delete/{id}")
+    public String deleteTask(@PathVariable("id") Long id) {
+        taskService.deleteTaskById(id);
+        return "redirect:/tasks";
+    }
+
+    @GetMapping("/edit/{id}")
+    public String editTask(@PathVariable("id") Long id, Model model) {
+        model.addAttribute("task", taskService.getTaskById(id));
+
+        return "task-form";
+    }
+
+}

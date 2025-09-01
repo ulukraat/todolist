@@ -16,10 +16,8 @@ import java.util.List;
 public class TaskController {
     @Autowired
     private TaskService taskService;
-    @Autowired
-    private TaskRepository taskRepository;
 
-    @GetMapping()
+    @GetMapping("/{userId}")
     public String getTask(Model model) {
         List<Task> tasks = taskService.getAllTasks();
 
@@ -28,6 +26,7 @@ public class TaskController {
             System.out.println("Название: " + task.getTitle());
             System.out.println("Начало задачи: " + task.getStartDate());
             System.out.println("Конец задачи: " + task.getDueDate());
+            System.out.println("Статус задачи" +( task.getIsCompleted() ? " - выполнено" : " - еще не выполнен"));
         }
         model.addAttribute("tasks", taskService.getAllTasks());
         return "task-list";

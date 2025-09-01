@@ -14,6 +14,29 @@ public class Task {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Column(nullable = false)
+    private String title;
+
+    @Column(name = "start_date" , nullable = false)
+    private LocalDateTime startDate;
+
+    @Column(name = "due_date", nullable = false)
+    private LocalDateTime dueDate;
+
+    @Column(name = "is_completed")
+    private Boolean isCompleted;
+
+    public Task(String title, LocalDateTime dueDate) {
+        this.title = title;
+        this.startDate = LocalDateTime.now();
+        this.dueDate = dueDate;
+    }
+    @ManyToOne
+    @JoinColumn(name = "usr_id")
+    private User user;
+
+    public Task() {}
+
     public LocalDateTime getDueDate() {
         return dueDate;
     }
@@ -46,19 +69,12 @@ public class Task {
         this.title = title;
     }
 
-    @Column(nullable = false)
-    private String title;
-
-    @Column(name = "start_date")
-    private LocalDateTime startDate;
-
-    @Column(name = "due_date")
-    private LocalDateTime dueDate;
-
-    public Task(String title, LocalDateTime dueDate) {
-        this.title = title;
-        this.startDate = LocalDateTime.now();
-        this.dueDate = dueDate;
+    public Boolean getIsCompleted() {
+        return isCompleted;
     }
-    public Task() {}
+
+    public void setIsCompleted(Boolean completed) {
+        isCompleted = completed;
+    }
+
 }

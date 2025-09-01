@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Вход</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
+</head>
+<body class="bg-dark text-light">
+  <section>
+    <div class = "container">
+        <h2 class="outline-danger">Вход в акканут</h2>
+          <form th:action="@{/login}" class="mb-3" th:object="${user}" method="post">
+              <div class="mb-1">
+                <label class="form-label" for="name">Логин:</label>
+                <input type="text" th:field="*{login}" id="name" class="form-control bg-dark text-light"> <br>
+              </div>
+              <div class="mb-1">
+                  <label class="form-label" for="password">Пароль:</label>
+                  <input type="text" th:field="*{password}" id="password" class="form-control bg-dark text-light"> <br>
+              </div>
+              <button type="submit" class="btn btn-outline-danger">Войти</button>
+          </form>
+        <a class="btn btn-outline-danger" th:href="@{/user/authorozation}">Нет аккаунта?</a>
+    </div>
+  </section>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
+</body>
+</html>

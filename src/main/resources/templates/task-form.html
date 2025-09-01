@@ -19,6 +19,10 @@
                  <label class="form-label" for="deadline">Конец задачи</label>
                  <input type="datetime-local" th:field="*{dueDate}" id="deadline" class="form-control bg-dark text-light"> <br>
               </div>
+              <div class="mb-3 form-check">
+                  <input type="checkbox" th:field="*{isCompleted}" class="form-check-input" id="completed">
+                  <label class="form-check-label" for="completed">Задача выполнена</label>
+              </div>
               <button type="submit" class="btn btn-outline-danger">Сохранить </button>
           </form>
           <a class="btn btn-outline-danger" th:href="@{/tasks}">Назад к списку</a>

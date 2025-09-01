@@ -18,6 +18,7 @@
                    <th>Название задачи</th>
                    <th>Начало задачи</th>
                    <th>Конец задачи</th>
+                   <th>Статус</th>
                </tr>
                </thead>
                <tbody>
@@ -26,6 +27,7 @@
                    <td th:text="${task.title}"></td>
                    <td th:text="${#temporals.format(task.startDate, 'dd.MM.yyyy HH:mm')}"></td>
                    <td th:text="${#temporals.format(task.dueDate, 'd.MM.yyyy HH:mm')}"></td>
+                   <td th:text="${task.isCompleted} ? '✅ Выполнено' : '❌Еще не выполнено'"></td>
                    <td>
                        <a class="btn btn-outline-danger" th:href="@{/tasks/edit/{id}(id=${task.id})}">Редактировать</a>
                        <a class="btn btn-outline-danger" th:href="@{/tasks/delete/{id}(id=${task.id})}">Удалить</a>

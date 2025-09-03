@@ -3,22 +3,24 @@ package com.todo.todo.service;
 import com.todo.todo.model.User;
 import com.todo.todo.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
-public class UserService {
+public class UserService implements UserDetailsService {
     @Autowired
     private UserRepository userRepository;
 
-    public User getByUserId(long userId) {
-        return userRepository.getById(userId);
+    public List<User> findAll() {
+        return userRepository.findAll();
     }
-    public void saveUser(User user) {
-        userRepository.save(user);
-    }
-    public boolean isValid(User user) {
-        User existingUser = userRepository.findByLogin(user.getLogin());
-        if (existingUser == null) return false;
-        return user.getLogin().equals(existingUser.getLogin());
+
+    @Override
+    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+        return userRepository.findByUsername(username).orElseThrow(() -> new UsernameNotFoundException(username));
     }
 }

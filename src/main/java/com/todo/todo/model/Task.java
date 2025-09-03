@@ -76,5 +76,8 @@ public class Task {
     public void setIsCompleted(Boolean completed) {
         isCompleted = completed;
     }
+    public User getUser() { return getUser();}
+
+    public void setUser(User user) { this.user = user; }
 
 }

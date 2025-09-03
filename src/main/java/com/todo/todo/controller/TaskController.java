@@ -1,13 +1,16 @@
 package com.todo.todo.controller;
 
 import com.todo.todo.model.Task;
+import com.todo.todo.model.User;
 import com.todo.todo.repository.TaskRepository;
 import com.todo.todo.service.TaskService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.security.Principal;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -17,9 +20,10 @@ public class TaskController {
     @Autowired
     private TaskService taskService;
 
-    @GetMapping("/{userId}")
-    public String getTask(Model model) {
-        List<Task> tasks = taskService.getAllTasks();
+    @GetMapping()
+    public String getTask(Model model, Principal principal) {
+        String username = principal.getName();
+        List<Task> tasks = taskService.getTasksByUserUsername(username);
 
         for (Task task : tasks) {
             System.out.println("Задача ID: " + task.getId());
@@ -28,7 +32,7 @@ public class TaskController {
             System.out.println("Конец задачи: " + task.getDueDate());
             System.out.println("Статус задачи" +( task.getIsCompleted() ? " - выполнено" : " - еще не выполнен"));
         }
-        model.addAttribute("tasks", taskService.getAllTasks());
+        model.addAttribute("tasks", tasks);
         return "task-list";
     }
 
@@ -39,13 +43,14 @@ public class TaskController {
     }
 
     @PostMapping("/save")
-    public String saveTask(@ModelAttribute("task") Task task) {
+    public String saveTask(@ModelAttribute("task") Task task, @AuthenticationPrincipal User user) {
         if (task.getId() == null) {
             task.setStartDate(LocalDateTime.now());
         } else {
             Task existing = taskService.getTaskById(task.getId());
             task.setStartDate(existing.getStartDate());
         }
+        task.setUser(user);
         taskService.saveTask(task);
         return "redirect:/tasks";
     }

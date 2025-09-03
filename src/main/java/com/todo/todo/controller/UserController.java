@@ -16,19 +16,4 @@ public class UserController {
     @Autowired
     private UserService userService;
 
-    @GetMapping("/login")
-    public String getLoginForm(Model model) {
-        model.addAttribute("user", new User());
-        return "user-login";
-    }
-
-    @PostMapping("/login")
-    public String postLogin(@ModelAttribute("user")  User user, Model model) {
-        if(userService.isValid(user)) {
-            return "redirect:/tasks/";
-        } else {
-            model.addAttribute("message", "Invalid username or password.");
-            return "user-login";
-        }
-    }
 }

@@ -5,10 +5,12 @@ import com.todo.todo.model.User;
 import com.todo.todo.repository.TaskRepository;
 import com.todo.todo.service.TaskService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.security.Principal;
 import java.time.LocalDateTime;
@@ -60,11 +62,13 @@ public class TaskController {
         taskService.deleteTaskById(id);
         return "redirect:/tasks";
     }
-
     @GetMapping("/edit/{id}")
     public String editTask(@PathVariable("id") Long id, Model model) {
-        model.addAttribute("task", taskService.getTaskById(id));
-
+        Task task = taskService.getTaskById(id);
+        if (task == null) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Task not found");
+        }
+        model.addAttribute("task", task);
         return "task-form";
     }
 

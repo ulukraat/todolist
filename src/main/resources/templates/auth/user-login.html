@@ -12,11 +12,11 @@
           <form th:action="@{/login}" class="mb-3" th:object="${user}" method="post">
               <div class="mb-1">
                 <label class="form-label" for="username">Логин:</label>
-                <input type="text" name="username" id="username" placeholder="Введите ваш логин" class="form-control bg-dark text-light" style="::placeholder { color: white; }"> <br>
+                <input type="text" name="username" id="username" placeholder="Введите ваш логин" class="form-control bg-dark text-light" style="::placeholder { color: white; }" required> <br>
               </div>
               <div class="mb-1">
                   <label class="form-label" for="password">Пароль:</label>
-                  <input type="password" name="password" id="password" placeholder="Введите ваш пароль" class="form-control bg-dark text-light"> <br>
+                  <input type="password" name="password" id="password" placeholder="Введите ваш пароль" class="form-control bg-dark text-light" required> <br>
               </div>
               <button type="submit" class="btn btn-outline-danger">Войти в аккаунт</button>
           </form>

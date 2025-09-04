@@ -12,19 +12,19 @@
         <form th:action="@{/register}" class="mb-3" th:object="${user}" method="post">
             <div class="mb-1">
                 <label class="form-label" for="firstname">Ваше имя:</label>
-                <input type="text" th:field="*{firstName}" id="firstname" class="form-control bg-dark text-light"> <br>
+                <input type="text" th:field="*{firstName}" id="firstname" class="form-control bg-dark text-light" maxlength="50" required > <br>
             </div>
             <div class="mb-1">
                 <label class="form-label" for="lastname">Ваша фамилия</label>
-                <input type="text" th:field="*{lastName}" id="lastname" class="form-control bg-dark text-light"> <br>
+                <input type="text" th:field="*{lastName}" id="lastname" class="form-control bg-dark text-light"  maxlength="50 "required> <br>
             </div>
             <div class="mb-1">
                 <label class="form-label" for="username">Логин:</label>
-                <input type="text" th:field="*{username}" id="username" placeholder="Придумайте логин" class="form-control bg-dark text-light"> <br>
+                <input type="text" th:field="*{username}" id="username" placeholder="Придумайте логин" class="form-control bg-dark text-light" maxlength="16" required > <br>
             </div>
             <div class="mb-1">
                 <label class="form-label" for="password">Пароль:</label>
-                <input type="password" th:field="*{password}" id="password" placeholder="Придумайте пароль" class="form-control bg-dark text-light"> <br>
+                <input type="password" th:field="*{password}" id="password" placeholder="Придумайте пароль" class="form-control bg-dark text-light" required maxlength="8"> <br>
             </div>
             <button type="submit" class="btn btn-outline-danger">Создать аккаунт</button>
         </form>

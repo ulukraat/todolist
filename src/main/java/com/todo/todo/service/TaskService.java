@@ -22,10 +22,11 @@ public class TaskService {
     }
 
     public Task saveTask(Task task){
-        if (task.getDueDate().isBefore(task.getStartDate()))
-        {
+        if (task.getDueDate() == null)
+            throw new IllegalArgumentException("Task due date cannot be null");
+        else if (task.getDueDate().isBefore(task.getStartDate()))
             throw new IllegalArgumentException("Task start date cannot be after due date");
-        }
+
         return taskRepository.save(task);
     }
 

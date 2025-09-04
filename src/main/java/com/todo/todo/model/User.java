@@ -22,10 +22,10 @@ public class User implements UserDetails {
     @Column(name = "usr_lastname")
     private String lastName;
 
-    @Column(name = "usr_username",unique = true)
+    @Column(name = "usr_username",unique = true, nullable = false)
     private String username;
 
-    @Column(name = "usr_password")
+    @Column(name = "usr_password",nullable = false)
     private String password;
 
     @OneToMany(mappedBy = "user",cascade = CascadeType.ALL,orphanRemoval = true)

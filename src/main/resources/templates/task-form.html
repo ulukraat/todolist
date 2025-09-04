@@ -13,11 +13,11 @@
               <input type="hidden" th:field="*{id}" />
               <div class="mb-3">
                 <label class="form-label" for="name">Название:</label>
-                <input type="text" th:field="*{title}" id="name" class="form-control bg-dark text-light"> <br>
+                <input type="text" th:field="*{title}" id="name" class="form-control bg-dark text-light" maxlength="255"> <br>
               </div>
               <div class="mb-3">
                  <label class="form-label" for="deadline">Конец задачи</label>
-                 <input type="datetime-local" th:field="*{dueDate}" id="deadline" class="form-control bg-dark text-light"> <br>
+                 <input type="datetime-local" th:field="*{dueDate}"  id="deadline" max="9999-12-31T23:59" class="form-control bg-dark text-light"> <br>
               </div>
               <div class="mb-3 form-check">
                   <input type="checkbox" th:field="*{isCompleted}" class="form-check-input" id="completed">

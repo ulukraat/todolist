@@ -14,7 +14,6 @@ import java.util.List;
 public class User implements UserDetails {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "usr_id")
     private Long id;
 
     @Column(name = "usr_firstname")

@@ -32,7 +32,7 @@ public class Task {
         this.dueDate = dueDate;
     }
     @ManyToOne
-    @JoinColumn(name = "usr_id")
+    @JoinColumn(name = "usr_id",referencedColumnName = "id")
     private User user;
 
     public Task() {}
@@ -76,7 +76,7 @@ public class Task {
     public void setIsCompleted(Boolean completed) {
         isCompleted = completed;
     }
-    public User getUser() { return getUser();}
+    public User getUser() { return user;}
 
     public void setUser(User user) { this.user = user; }
 

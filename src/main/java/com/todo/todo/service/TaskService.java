@@ -21,14 +21,20 @@ public class TaskService {
         return taskRepository.findById(id).orElse(null);
     }
 
-    public void saveTask(Task task){
-        taskRepository.save(task);
+    public Task saveTask(Task task){
+        if (task.getDueDate().isBefore(task.getStartDate()))
+        {
+            throw new IllegalArgumentException("Task start date cannot be after due date");
+        }
+        return taskRepository.save(task);
     }
 
     public void deleteTaskById(Long id){
         taskRepository.deleteById(id);
     }
+
     public List<Task> getTasksByUserUsername(String username){
         return  taskRepository.findTaskByUserUsername(username);
     }
+
 }
